@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+	<link rel="stylesheet" type="text/css" href="form.css">
+    <title>Pickup Schedule Form</title>
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">Recyclo.</a>
+        <nav class="navbar">
+            <ul class="navlist">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index.html#mission">ABOUT</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+                <li><a href="index.html#news">NEWS</a></li>
+                <li><a href="Signup.html">SIGNUP</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-nav-btn">
+            <ion-icon name="menu-outline" class="mobile-nav"></ion-icon>
+            <ion-icon name="close-outline" class="mobile-nav"></ion-icon>
+        </div>
+    </header>
+    <section id="request">
+    <h1><center>Pickup Schedule Form</center></h1>
+    <div class="form-style-5">
+    <form id="pickupForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="date">Pickup Date:</label>
+      <input type="date" id="date" name="date" required>
+
+      <label for="time">Pickup Time:</label>
+      <input type="time" id="time" name="time" required>
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" readonly>
+
+      <input type="submit" value="Schedule Pickup">
+    </form>
+  </div>
+<div class="modal_wrapper">
+    <div class="shadow close_btn"></div>
+    <div class="modal">
+        <div class="modal_item s_modal">
+          <div class="close close_btn">
+            <ion-icon name="close"></ion-icon>
+          </div>
+          <div class="modal_body">
+             <div class="s_icon">
+            <ion-icon name="checkmark"></ion-icon>
+          </div>
+          <div class="s_text">
+            <h2>SUCCESS</h2>
+            <p>We are delighted to inform you that we received your request.</p>
+          </div>
+        </div>
+        <div class="s_button">
+            <a href="index.html"><button class="success_btn">Continue</button></a>
+        </div>
+    </div>
+</div>
+</section>
+
+  <script>
+    var buttons = document.querySelectorAll(".modal_btns button");
+    var close_btns = document.querySelectorAll(".close_btn");
+    var modal_wrapper = document.querySelector(".modal_wrapper");
+    var s_modal = document.querySelector(".s_modal");
+
+    document.getElementById('pickupForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        modal_wrapper.classList.add('active');
+        s_modal.classList.add('active');
+    });
+
+    close_btns.forEach(function (close) {
+        close.addEventListener("click", function () {
+            modal_wrapper.classList.remove("active");
+            s_modal.classList.remove("active");
+        });
+    });
+    // Function to get user's location using Geolocation API
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        alert('Geolocation is not supported by this browser.');
+      }
+    }
+
+    // Function to populate the location input field with user's coordinates
+    function showPosition(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      const locationField = document.getElementById('location');
+      locationField.value = `${latitude}, ${longitude}`;
+    }
+    document.getElementById('location').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default behavior of the textbox
+        getLocation(); // Get user's location
+    });
+
+    document.getElementById('pickupForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+
+
+      // Reset the form
+      document.getElementById('pickupForm').reset();
+    });
+  </script>
+</body>
+</html>
